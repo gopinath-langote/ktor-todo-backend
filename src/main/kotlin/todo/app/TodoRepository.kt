@@ -7,10 +7,10 @@ class TodoRepository {
 
     fun save(todo: Todo): Todo {
         val randomUUID = UUID.randomUUID()
-        todo.copy(id = "$randomUUID", url = "$randomUUID")
-        todos.put(todo.id!!, todo)
-        print("todo --- $todo")
-        return todo
+        val copy = todo.copy(id = "$randomUUID", url = "$randomUUID")
+        todos.put(copy.id!!, copy)
+        print("todo --- $copy")
+        return copy
     }
 
     fun getAll(): Set<Todo> = todos.values.toSet()
