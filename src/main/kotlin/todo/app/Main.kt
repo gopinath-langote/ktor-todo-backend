@@ -15,10 +15,7 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.jackson.jackson
 import io.ktor.request.receive
 import io.ktor.response.respond
-import io.ktor.routing.get
-import io.ktor.routing.patch
-import io.ktor.routing.post
-import io.ktor.routing.routing
+import io.ktor.routing.*
 import java.time.LocalDate
 
 data class Model(val name: String, val items: List<Item>, val date: LocalDate = LocalDate.of(2018, 4, 13))
@@ -77,6 +74,11 @@ fun Application.main() {
         post("/") {
             val todo = call.receive<Todo>()
             todos.save(todo)
+            call.respond(HttpStatusCode.OK)
+        }
+
+        delete("/") {
+            todos.deleteAll()
             call.respond(HttpStatusCode.OK)
         }
     }
