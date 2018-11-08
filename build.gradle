@@ -58,3 +58,14 @@ task stage(dependsOn: ['build', 'clean'])
 build.mustRunAfter clean
 
 libsDirName = '../target/'
+
+task fatJar(type: Jar) {
+    manifest {
+        attributes 'Implementation-Title': 'Gradle Jar File Example',
+                'Implementation-Version': version,
+                'Main-Class': 'io.ktor.server.netty.DevelopmentEngine'
+    }
+    baseName = project.name
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
