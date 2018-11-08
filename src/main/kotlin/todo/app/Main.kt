@@ -45,7 +45,7 @@ fun Application.main() {
             if (id == null) {
                 call.respond(HttpStatusCode.NotFound)
             } else {
-                val message = todos.get(id.toInt())
+                val message = todos.get(id)
                 if (message == null) {
                     call.respond(HttpStatusCode.NotFound)
                 } else {
@@ -60,8 +60,8 @@ fun Application.main() {
                 call.respond(HttpStatusCode.NotFound)
             } else {
                 val todo = call.receive<Todo>()
-                todos.save(todo)
-                call.respond(HttpStatusCode.OK)
+                val save = todos.save(todo)
+                call.respond(todos.getAll())
             }
         }
 
