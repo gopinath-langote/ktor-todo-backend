@@ -48,6 +48,15 @@ fun Application.main() {
             call.respond(todos.getAll())
         }
 
+        get("/{id}") {
+            val id = call.parameters.get("id")
+            if (id == null) {
+                call.respond(HttpStatusCode.NotFound)
+            } else {
+                call.respond(todos.get(id.toInt()))
+            }
+        }
+
         post("/") {
             val todo = call.receive<Todo>()
             todos.save(todo)
