@@ -1,13 +1,13 @@
 package todo.app
 
 class TodoRepository {
-    private var todos = mutableSetOf<Todo>()
+    private var todos = mutableMapOf<Int, Todo>()
 
-    fun save(todo: Todo) = todos.add(todo)
+    fun save(todo: Todo) = todos.put(todo.id, todo)
 
-    fun getAll(): Set<Todo> = todos
+    fun getAll(): Set<Todo> = todos.values.toSet()
 
-    fun get(id: Int): Todo = todos.first { it.id == id }
+    fun get(id: Int): Todo? = todos.get(id)
 }
 
 

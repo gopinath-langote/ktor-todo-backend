@@ -16,6 +16,7 @@ import io.ktor.jackson.jackson
 import io.ktor.request.receive
 import io.ktor.response.respond
 import io.ktor.routing.get
+import io.ktor.routing.patch
 import io.ktor.routing.post
 import io.ktor.routing.routing
 import java.time.LocalDate
@@ -53,7 +54,23 @@ fun Application.main() {
             if (id == null) {
                 call.respond(HttpStatusCode.NotFound)
             } else {
-                call.respond(todos.get(id.toInt()))
+                val message = todos.get(id.toInt())
+                if (message == null) {
+                    call.respond(HttpStatusCode.NotFound)
+                } else {
+                    call.respond(message)
+                }
+            }
+        }
+
+        patch("/{id}") {
+            val id = call.parameters.get("id")
+            if (id == null) {
+                call.respond(HttpStatusCode.NotFound)
+            } else {
+                val todo = call.receive<Todo>()
+                todos.save(todo)
+                call.respond(HttpStatusCode.OK)
             }
         }
 
