@@ -55,15 +55,20 @@ fun Application.main() {
         }
 
         patch("/{id}") {
-            val todo = call.receive<Todo>()
-            val save = todos.save(todo)
-            call.respond(save)
+            val id = call.parameters.get("id")
+            if (id == null) {
+                call.respond(HttpStatusCode.NotFound)
+            } else {
+                val todo = call.receive<Todo>()
+                val save = todos.patch(todo)
+                call.respond(save)
+            }
         }
 
         post("/") {
             val todo = call.receive<Todo>()
-            todos.save(todo)
-            call.respond(HttpStatusCode.OK)
+            val save = todos.save(todo)
+            call.respond(save)
         }
 
         delete("/") {

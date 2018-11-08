@@ -9,7 +9,6 @@ class TodoRepository {
         val randomUUID = UUID.randomUUID()
         val copy = todo.copy(id = "$randomUUID", url = "$randomUUID")
         todos.put(copy.id!!, copy)
-        print("todo --- $copy")
         return copy
     }
 
@@ -18,6 +17,11 @@ class TodoRepository {
     fun get(id: String): Todo? = todos.get(id)
 
     fun deleteAll() = todos.clear()
+
+    fun patch(todo: Todo): Todo {
+        todos.put(todo.id!!, todo)
+        return todo
+    }
 }
 
 
