@@ -8,23 +8,16 @@ import io.ktor.application.Application
 import io.ktor.application.call
 import io.ktor.application.install
 import io.ktor.features.*
-import io.ktor.http.HttpMethod
 import io.ktor.http.HttpStatusCode
 import io.ktor.jackson.jackson
 import io.ktor.request.receive
 import io.ktor.response.respond
 import io.ktor.routing.*
-import java.time.LocalDate
-
-data class Model(val name: String, val items: List<Item>, val date: LocalDate = LocalDate.of(2018, 4, 13))
-data class Item(val key: String, val value: String)
-
-val model = Model("root", listOf(Item("A", "Apache"), Item("B", "Bing")))
 
 fun Application.main() {
     val todos = TodoRepository()
 
-    install(CORS){
+    install(CORS) {
         anyHost()
     }
     install(DefaultHeaders)

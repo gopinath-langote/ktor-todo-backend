@@ -56,3 +56,5 @@ compileTestKotlin {
 
 task stage(dependsOn: ['build', 'clean'])
 build.mustRunAfter clean
+
+libsDirName = '../target/'
