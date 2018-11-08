@@ -54,9 +54,6 @@ compileTestKotlin {
     kotlinOptions.jvmTarget = "1.8"
 }
 
-task stage(dependsOn: ['build', 'clean'])
-build.mustRunAfter clean
-
 libsDirName = '../target/'
 
 task fatJar(type: Jar) {
