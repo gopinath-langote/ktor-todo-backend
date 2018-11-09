@@ -4,12 +4,13 @@ import java.util.*
 
 class TodoRepository {
     private var todos = mutableMapOf<String, Todo>()
-    private val baseUrl = "https://ktor-todo-backend.herokuapp.com/"
+    private val baseUrl = "https://a2f0c486.ngrok.io/"
     fun save(todo: Todo): Todo {
         val randomUUID = UUID.randomUUID()
-        val copy = todo.copy(id = "$randomUUID", url = "$baseUrl$randomUUID", order = todo.order ?: 0)
-        todos[copy.id!!] = copy
-        return copy
+        val newId = "$randomUUID"
+        val updatedTodo = todo.copy(id = newId, url = "$baseUrl$randomUUID", order = todo.order ?: 0)
+        todos[newId] = updatedTodo
+        return updatedTodo
     }
 
     fun getAll(): Set<Todo> = todos.values.toSet()
@@ -18,16 +19,14 @@ class TodoRepository {
 
     fun deleteAll() = todos.clear()
 
-    fun delete(id: String) = todos.remove(id)
+    fun delete(id: String): Todo? = todos.remove(id)
 
-    fun patch(id: String, todo: Todo): Todo {
-        val savedTodo = todos[id]
-        if (savedTodo != null) {
-            val newTodo = savedTodo.merge(todo)
-            todos[id] = newTodo
-            return newTodo
+    fun patch(id: String, todo: Todo): Todo? {
+        return todos[id]?.let {
+            val newTodo = todos[id]?.merge(todo)
+            newTodo?.let { a -> todos[id] = a }
+            newTodo
         }
-        return todo
     }
 }
 
