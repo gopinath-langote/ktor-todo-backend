@@ -4,7 +4,7 @@ import java.util.*
 
 class TodoRepository {
     private var todos = mutableMapOf<String, Todo>()
-    private val baseUrl = "https://a2f0c486.ngrok.io/"
+    private val baseUrl = "https://ktor-todo-backend.herokuapp.com/"
     fun save(todo: Todo): Todo {
         val randomUUID = UUID.randomUUID()
         val newId = "$randomUUID"
