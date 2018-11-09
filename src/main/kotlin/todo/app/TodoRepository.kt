@@ -7,8 +7,8 @@ class TodoRepository {
     private val baseUrl = "https://ktor-todo-backend.herokuapp.com/"
     fun save(todo: Todo): Todo {
         val randomUUID = UUID.randomUUID()
-        val copy = todo.copy(id = "$randomUUID", url = "$baseUrl+$randomUUID")
-        todos.put(copy.id!!, copy)
+        val copy = todo.copy(id = "$randomUUID", url = "$baseUrl$randomUUID")
+        todos[copy.id!!] = copy
         return copy
     }
 
