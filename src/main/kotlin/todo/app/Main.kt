@@ -8,6 +8,16 @@ import io.ktor.application.Application
 import io.ktor.application.call
 import io.ktor.application.install
 import io.ktor.features.*
+import io.ktor.http.HttpHeaders
+import io.ktor.http.HttpHeaders.AccessControlAllowCredentials
+import io.ktor.http.HttpHeaders.AccessControlAllowHeaders
+import io.ktor.http.HttpHeaders.AccessControlAllowMethods
+import io.ktor.http.HttpHeaders.AccessControlAllowOrigin
+import io.ktor.http.HttpHeaders.AccessControlExposeHeaders
+import io.ktor.http.HttpHeaders.AccessControlMaxAge
+import io.ktor.http.HttpHeaders.AccessControlRequestHeaders
+import io.ktor.http.HttpHeaders.AccessControlRequestMethod
+import io.ktor.http.HttpMethod
 import io.ktor.http.HttpStatusCode
 import io.ktor.jackson.jackson
 import io.ktor.request.receive
@@ -19,9 +29,26 @@ fun Application.main() {
 
     install(CORS) {
         anyHost()
-        header("access-control-allow-origin: *")
-        header("access-control-allow-headers: true")
+        method(HttpMethod.Options)
+        method(HttpMethod.Get)
+        method(HttpMethod.Delete)
+        method(HttpMethod.Post)
+        method(HttpMethod.Patch)
+        method(HttpMethod.Put)
+        header(HttpHeaders.AccessControlAllowCredentials)
+        header(AccessControlAllowOrigin)
+        header(AccessControlAllowMethods)
+        header(AccessControlAllowCredentials)
+        header(AccessControlAllowHeaders)
+        header(AccessControlRequestMethod)
+        header(AccessControlRequestHeaders)
+        header(AccessControlExposeHeaders)
+        header(AccessControlMaxAge)
+
+        header("Access-Control-Request-Headers: Content-Type")
+        header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS, HEAD")
     }
+    install(XForwardedHeadersSupport)
     install(DefaultHeaders)
     install(Compression)
     install(CallLogging)
