@@ -20,8 +20,8 @@ class TodoRepository {
 
     fun delete(id: String) = todos.remove(id)
 
-    fun patch(todo: Todo): Todo {
-        todos.put(todo.id!!, todo)
+    fun patch(id: String, todo: Todo): Todo {
+        todos[id] = todo
         return todo
     }
 }

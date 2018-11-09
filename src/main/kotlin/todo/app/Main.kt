@@ -62,7 +62,7 @@ fun Application.main() {
                 call.respond(HttpStatusCode.NotFound)
             } else {
                 val todo = call.receive<Todo>()
-                val save = todos.patch(todo)
+                val save = todos.patch(id, todo)
                 call.respond(save)
             }
         }
