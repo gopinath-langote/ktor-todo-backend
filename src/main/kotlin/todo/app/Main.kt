@@ -44,9 +44,6 @@ fun Application.main() {
         header(AccessControlRequestHeaders)
         header(AccessControlExposeHeaders)
         header(AccessControlMaxAge)
-
-        header("Access-Control-Request-Headers: Content-Type")
-        header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS, HEAD")
     }
     install(XForwardedHeadersSupport)
     install(DefaultHeaders)
