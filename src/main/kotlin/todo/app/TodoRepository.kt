@@ -7,7 +7,7 @@ class TodoRepository {
     private val baseUrl = "https://ktor-todo-backend.herokuapp.com/"
     fun save(todo: Todo): Todo {
         val randomUUID = UUID.randomUUID()
-        val copy = todo.copy(id = "$randomUUID", url = "$baseUrl$randomUUID")
+        val copy = todo.copy(id = "$randomUUID", url = "$baseUrl$randomUUID", order = todo.order ?: 0)
         todos[copy.id!!] = copy
         return copy
     }
@@ -21,7 +21,12 @@ class TodoRepository {
     fun delete(id: String) = todos.remove(id)
 
     fun patch(id: String, todo: Todo): Todo {
-        todos[id] = todo
+        val savedTodo = todos[id]
+        if (savedTodo != null) {
+            val newTodo = savedTodo.merge(todo)
+            todos[id] = newTodo
+            return newTodo
+        }
         return todo
     }
 }
