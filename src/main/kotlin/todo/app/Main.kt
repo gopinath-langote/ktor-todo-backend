@@ -19,6 +19,8 @@ fun Application.main() {
 
     install(CORS) {
         anyHost()
+        header("access-control-allow-origin: *")
+        header("access-control-allow-headers: true")
     }
     install(DefaultHeaders)
     install(Compression)
@@ -74,6 +76,16 @@ fun Application.main() {
         delete("/") {
             todos.deleteAll()
             call.respond(HttpStatusCode.OK)
+        }
+
+        delete("/{id}") {
+            val id = call.parameters.get("id")
+            if (id == null) {
+                call.respond(HttpStatusCode.NotFound)
+            } else {
+                todos.delete(id)
+                call.respond(HttpStatusCode.OK)
+            }
         }
     }
 }
